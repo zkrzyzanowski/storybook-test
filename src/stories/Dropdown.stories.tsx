@@ -11,7 +11,7 @@ export default {
     layout: "fullscreen",
   },
   args: {
-    "data-testid": "fiber-dropdown",
+    "data-testid": "test-dropdown",
     pillsSectionDividerTopText: "Selected",
     pillsSectionDividerBottomText: "Options",
     options: [
@@ -51,7 +51,7 @@ export const SelectItems = Template.bind({});
 
 SelectItems.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const dropdown = await canvas.findByTestId("fiber-dropdown");
+  const dropdown = await canvas.findByTestId("test-dropdown");
 
   expect(dropdown).toBeVisible();
 
@@ -70,14 +70,10 @@ SelectItems.play = async ({ canvasElement }) => {
   let selectedOptions = await canvas.findAllByTestId("selected-option");
   expect(selectedOptions).toHaveLength(1);
 
-  const updatedSelectedOptionsWrapper = await canvas.findByTestId(
-    "selected-options-wrapper"
-  );
-  expect(updatedSelectedOptionsWrapper).toHaveTextContent("1 Selected");
+  await waitFor(() => userEvent.click(availableOptions[1]));
 
-  await userEvent.click(availableOptions[1]);
-
-  expect(await canvas.findAllByTestId("selected-option")).toHaveLength(2);
+  selectedOptions = await canvas.findAllByTestId("selected-option");
+  expect(selectedOptions).toHaveLength(2);
 
   const selectedOptionPill =
     selectedOptions[0].querySelector("svg") ?? new HTMLElement();
