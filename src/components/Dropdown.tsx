@@ -165,7 +165,10 @@ const viewMultiSelectSelected = (
           <ul className={twProp(`flex flex-row flex-wrap gap-2`)}>
             {dropdownType.selectedOptions.map((s) => {
               return (
-                <li key={`${s}-selected-option`} data-testid="selected-option">
+                <li
+                  key={`${s.value}-selected-option`}
+                  data-testid="selected-option"
+                >
                   <Pill
                     label={s.label}
                     icon={<XOutlineIcon />}

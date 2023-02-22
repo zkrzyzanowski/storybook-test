@@ -8,7 +8,7 @@
     "serve": "sirv build --port 8080 --cors --single",
     "dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider preact watch",
     "lint": "eslint src",
-    "test": "jest",
+    "test": "test-storybook",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
@@ -30,6 +30,7 @@
     "@storybook/builder-vite": "^0.4.2",
     "@storybook/jest": "^0.0.10",
     "@storybook/preact": "^6.5.16",
+    "@storybook/test-runner": "^0.9.4",
     "@storybook/testing-library": "^0.0.13",
     "@types/react": "17.0.19",
     "babel-loader": "^8.3.0",

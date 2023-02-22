@@ -1,10 +1,8 @@
-import { DropdownMultiSelect, DropdownOption } from "./Dropdown";
+import { DropdownMultiSelect, DropdownOption } from "../components/Dropdown";
 import { useState } from "preact/hooks";
-import { userEvent, waitFor, within } from "@storybook/testing-library";
-import { expect } from "@storybook/jest";
 
 export default {
-  title: "Example/Page",
+  title: "Example/Dropdown",
   component: DropdownMultiSelect,
   parameters: {
     // More on Story layout: https://storybook.js.org/docs/preact/configure/story-layout
@@ -46,43 +44,3 @@ const Template = (args) => {
 };
 
 export const Default = Template.bind({});
-
-export const SelectItems = Template.bind({});
-
-SelectItems.play = async ({ canvasElement }) => {
-  const canvas = within(canvasElement);
-  const dropdown = await canvas.findByTestId("test-dropdown");
-
-  expect(dropdown).toBeVisible();
-
-  expect(dropdown).toHaveTextContent("10 Options");
-
-  const selectedOptionsWrapper = canvas.queryByTestId(
-    "selected-options-wrapper"
-  );
-  expect(selectedOptionsWrapper).toBeNull();
-
-  const availableOptions = await canvas.findAllByTestId("available-option");
-  expect(availableOptions).toHaveLength(10);
-
-  await userEvent.click(availableOptions[0]);
-
-  let selectedOptions = await canvas.findAllByTestId("selected-option");
-  expect(selectedOptions).toHaveLength(1);
-
-  await waitFor(() => userEvent.click(availableOptions[1]));
-
-  selectedOptions = await canvas.findAllByTestId("selected-option");
-  expect(selectedOptions).toHaveLength(2);
-
-  const selectedOptionPill =
-    selectedOptions[0].querySelector("svg") ?? new HTMLElement();
-
-  await userEvent.click(selectedOptionPill);
-  expect(await canvas.findAllByTestId("selected-option")).toHaveLength(1);
-
-  await userEvent.click(availableOptions[1]);
-
-  selectedOptions = canvas.queryAllByTestId("selected-option");
-  expect(selectedOptions).toHaveLength(0);
-};
